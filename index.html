@@ -3,82 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio</title>
+<title>RuchyRuchy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #f9f9f7;
-    --surface: #ffffff;
-    --border: rgba(0,0,0,0.1);
-    --border-hover: rgba(0,0,0,0.2);
+    --bg: #f5f3ee;
+    --surface: #edeae3;
     --text: #111;
-    --muted: #777;
-    --tag-bg: #f0efeb;
-    --tag-text: #555;
+    --muted: #888;
+    --border: rgba(0,0,0,0.08);
+    --border-hover: rgba(0,0,0,0.16);
+    --tag-bg: rgba(0,0,0,0.07);
+    --tag-text: rgba(0,0,0,0.5);
     --pill-active-bg: #111;
     --pill-active-text: #fff;
+    --radius: 8px;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #141414;
-      --surface: #1e1e1e;
-      --border: rgba(255,255,255,0.1);
-      --border-hover: rgba(255,255,255,0.22);
-      --text: #f0f0f0;
-      --muted: #888;
-      --tag-bg: #2a2a2a;
-      --tag-text: #aaa;
-      --pill-active-bg: #f0f0f0;
-      --pill-active-text: #111;
-    }
-  }
+  html { scroll-behavior: smooth; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding: 0 1.5rem 4rem;
-    max-width: 1100px;
-    margin: 0 auto;
   }
 
-  /* NAV */
+  /* ─── LAYOUT ─── */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ─── NAV ─── */
   nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 0 1.25rem;
-    border-bottom: 0.5px solid var(--border);
-    margin-bottom: 1.75rem;
+    padding: 1.1rem 0;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
-  .nav-name {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .nav-logo {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     color: var(--text);
     text-decoration: none;
   }
-  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
     font-size: 13px;
+    font-weight: 400;
     color: var(--muted);
     text-decoration: none;
+    transition: color 0.15s;
   }
   .nav-links a:hover { color: var(--text); }
 
-  /* FILTERS */
+  /* ─── SECTIONS ─── */
+  section { padding: 3rem 0; }
+  section + section { border-top: 0.5px solid var(--border); }
+
+  /* ─── FILTERS ─── */
   .filter-bar {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
   .filter-btn {
+    font-family: 'DM Sans', sans-serif;
     font-size: 12px;
+    font-weight: 400;
     padding: 5px 14px;
     border-radius: 999px;
     border: 0.5px solid var(--border);
@@ -86,7 +97,7 @@
     color: var(--muted);
     cursor: pointer;
     transition: all 0.15s;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   .filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
   .filter-btn.active {
@@ -95,73 +106,109 @@
     border-color: var(--pill-active-bg);
   }
 
-  /* GRID */
+  /* ─── GRID ─── */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+    gap: 10px;
   }
 
-  /* CARD */
+  /* ─── CARD ─── */
   .card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: 12px;
+    background: transparent;
+    border-radius: var(--radius);
     overflow: hidden;
     cursor: pointer;
-    transition: border-color 0.15s, transform 0.15s;
+    transition: transform 0.2s;
   }
-  .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+  .card:hover { transform: translateY(-2px); }
 
   .thumb {
     position: relative;
     aspect-ratio: 16/9;
-    background: var(--tag-bg);
+    background: var(--surface);
     overflow: hidden;
+    border-radius: var(--radius);
   }
   .thumb img {
     width: 100%; height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.4s ease;
   }
+  .card:hover .thumb img { transform: scale(1.03); }
+
+  /* Gradient overlay — always visible at bottom */
+  .thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(0,0,0,0.55) 100%
+    );
+    border-radius: var(--radius);
+    pointer-events: none;
+  }
+
+  /* Text overlay — bottom of thumb */
+  .thumb-meta {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 10px 12px;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .thumb-title {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .thumb-tag {
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.65);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* Play overlay on hover */
   .play-overlay {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.2);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
     opacity: 0;
-    transition: opacity 0.15s;
+    transition: opacity 0.2s;
+    border-radius: var(--radius);
   }
   .card:hover .play-overlay { opacity: 1; }
   .play-btn {
-    width: 42px; height: 42px;
+    width: 40px; height: 40px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.88);
     display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
   }
-  .play-btn svg { width: 16px; height: 16px; fill: #111; margin-left: 2px; }
+  .play-btn svg { width: 14px; height: 14px; fill: #111; margin-left: 2px; }
 
-  .card-body { padding: 10px 14px 14px; }
-  .card-title {
-    font-size: 13px; font-weight: 500;
-    color: var(--text);
-    margin-bottom: 6px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .card-tag {
-    display: inline-block;
-    font-size: 11px;
-    padding: 2px 9px;
-    border-radius: 999px;
-    background: var(--tag-bg);
-    color: var(--tag-text);
-    letter-spacing: 0.02em;
-  }
-
-  /* LIGHTBOX */
+  /* ─── LIGHTBOX ─── */
   .lightbox {
     display: none;
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.88);
     z-index: 999;
     align-items: center;
     justify-content: center;
@@ -171,7 +218,7 @@
   .lightbox-inner {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: 960px;
     aspect-ratio: 16/9;
     background: #000;
     border-radius: 10px;
@@ -180,10 +227,62 @@
   .lightbox-inner iframe { width: 100%; height: 100%; border: none; }
   .lightbox-close {
     position: absolute;
-    top: -2.5rem; right: 0;
+    top: -2.75rem; right: 0;
     background: none; border: none;
-    color: #fff; font-size: 28px;
-    cursor: pointer; line-height: 1;
+    color: rgba(255,255,255,0.7);
+    font-size: 26px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .lightbox-close:hover { color: #fff; }
+
+  /* ─── ABOUT ─── */
+  .about-text {
+    max-width: 600px;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #333;
+  }
+  .about-text em {
+    font-style: italic;
+    color: var(--text);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .contact-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.15s;
+  }
+  .contact-links a:hover { opacity: 0.5; }
+  .contact-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  /* ─── SECTION HEADING ─── */
+  .section-heading {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
   }
 
   .hidden { display: none !important; }
@@ -192,90 +291,327 @@
 <body>
 
 <nav>
-  <a class="nav-name" href="#">Your Name</a>
-  <ul class="nav-links">
-    <li><a href="#">Work</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#" onclick="alert('michal@email.com'); return false;">Contact</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">RuchyRuchy</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
-<div class="filter-bar" id="filters">
-  <button class="filter-btn active" data-cat="all">All</button>
-  <button class="filter-btn" data-cat="launch">Launch</button>
-  <button class="filter-btn" data-cat="product">Product</button>
-  <button class="filter-btn" data-cat="explainer">Explainer</button>
-  <button class="filter-btn" data-cat="lottie">Lottie</button>
-  <button class="filter-btn" data-cat="rive">Rive</button>
-</div>
-
-<div class="grid" id="grid">
-  <!-- 
-    JAK DODAC NOWY FILM:
-    1. Skopiuj blok <div class="card"> ... </div> poniżej
-    2. Zmień data-cat na: launch / product / explainer / lottie / rive
-    3. Dla Vimeo: embed-url = "https://player.vimeo.com/video/TWOJ_ID"
-       Dla YouTube: embed-url = "https://www.youtube.com/embed/TWOJ_ID"
-    4. thumb-url = link do miniatury (dla YT: https://i.ytimg.com/vi/TWOJ_ID/hqdefault.jpg)
-    5. Zmień tytul i tag
-  -->
-
-  <div class="card" data-cat="launch"
-    data-embed="https://player.vimeo.com/video/76979871?autoplay=1"
-    data-thumb="https://vumbnail.com/76979871.jpg">
-    <div class="thumb">
-      <img src="https://vumbnail.com/76979871.jpg" alt="Modaic Brand Launch">
-      <div class="play-overlay">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-      </div>
+<!-- WORK -->
+<section id="work">
+  <div class="container">
+    <div class="filter-bar" id="filters">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="launch">Launch</button>
+      <button class="filter-btn" data-cat="showreel">Showreel</button>
+      <button class="filter-btn" data-cat="web">Web</button>
+      <button class="filter-btn" data-cat="logo">Logo</button>
     </div>
-    <div class="card-body">
-      <p class="card-title">Modaic — Brand Launch</p>
-      <span class="card-tag">Launch</span>
+
+    <div class="grid" id="grid">
+
+      <!-- LAUNCH -->
+      <div class="card" data-cat="launch" data-embed="https://player.vimeo.com/video/1199536824/d78df6dd97?autoplay=1" data-thumb="https://vumbnail.com/1199536824.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536824.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Golf.dev - Launch Video 26'</span>
+            <span class="thumb-tag">Launch</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="launch" data-embed="https://player.vimeo.com/video/1199536823/b380f41577?autoplay=1" data-thumb="https://vumbnail.com/1199536823.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536823.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Golf.dev - Launch Video 25'</span>
+            <span class="thumb-tag">Launch</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="launch" data-embed="https://player.vimeo.com/video/1199536819/99bfe6948f?autoplay=1" data-thumb="https://vumbnail.com/1199536819.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536819.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Elastics - Launch Video</span>
+            <span class="thumb-tag">Launch</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="launch" data-embed="https://player.vimeo.com/video/366996170/7b3426e65d?autoplay=1" data-thumb="https://vumbnail.com/366996170.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/366996170.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Cateringoo - Launch Video</span>
+            <span class="thumb-tag">Launch</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="launch" data-embed="https://player.vimeo.com/video/427643329/5d6c2ad71b?autoplay=1" data-thumb="https://vumbnail.com/427643329.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/427643329.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">VAIOT - Intelligent Services</span>
+            <span class="thumb-tag">Launch</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWREEL -->
+      <div class="card" data-cat="showreel" data-embed="https://player.vimeo.com/video/1199536801/9c1c69b69e?autoplay=1" data-thumb="https://vumbnail.com/1199536801.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536801.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Cecilia Energy - Showreel</span>
+            <span class="thumb-tag">Showreel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="showreel" data-embed="https://player.vimeo.com/video/1199536799/12b166a50d?autoplay=1" data-thumb="https://vumbnail.com/1199536799.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536799.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Artie - Showreel</span>
+            <span class="thumb-tag">Showreel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="showreel" data-embed="https://player.vimeo.com/video/1199536800/2474fd8167?autoplay=1" data-thumb="https://vumbnail.com/1199536800.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536800.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">a16z x tonik - Showreel</span>
+            <span class="thumb-tag">Showreel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="showreel" data-embed="https://player.vimeo.com/video/1199536832/4ae4e585e3?autoplay=1" data-thumb="https://vumbnail.com/1199536832.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536832.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta">
+            <span class="thumb-title">Tonik 24' - Showreel</span>
+            <span class="thumb-tag">Showreel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEB -->
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199536798/6a8c486ae7?autoplay=1" data-thumb="https://vumbnail.com/1199536798.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199536798.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Bobsled - Website Animation</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/800790202/fa5e162033?autoplay=1" data-thumb="https://vumbnail.com/800790202.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/800790202.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Brainly Animation Guidelines Video</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199539940/a00d4896f3?autoplay=1" data-thumb="https://vumbnail.com/1199539940.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199539940.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Archil - Hero Animation</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199539941/33989966fe?autoplay=1" data-thumb="https://vumbnail.com/1199539941.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199539941.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Botbot - Robot 2</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199539942/6dd523f434?autoplay=1" data-thumb="https://vumbnail.com/1199539942.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199539942.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Bobsled - Hero animation</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199539943/c3acc74057?autoplay=1" data-thumb="https://vumbnail.com/1199539943.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199539943.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Botbot - Robot 1</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199539959/01b5c0085c?autoplay=1" data-thumb="https://vumbnail.com/1199539959.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199539959.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Tonik Valentines</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199539968/f553cb1da8?autoplay=1" data-thumb="https://vumbnail.com/1199539968.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199539968.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Tonik x Sicily Tribute</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199540387/4ae86a7f51?autoplay=1" data-thumb="https://vumbnail.com/1199540387.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199540387.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Kitty - Yoga</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199540388/d74e1ac929?autoplay=1" data-thumb="https://vumbnail.com/1199540388.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199540388.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Kitty - Claws</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199540390/7d0a1d405c?autoplay=1" data-thumb="https://vumbnail.com/1199540390.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199540390.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Kitty - Doomscrolling</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="web" data-embed="https://player.vimeo.com/video/1199540391/8e21b503f5?autoplay=1" data-thumb="https://vumbnail.com/1199540391.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199540391.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Kitty - Playful</span><span class="thumb-tag">Web</span></div>
+        </div>
+      </div>
+
+      <!-- LOGO -->
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541394/dea46047d4?autoplay=1" data-thumb="https://vumbnail.com/1199541394.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541394.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">a16z x Sonatic - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541398/9972a40936?autoplay=1" data-thumb="https://vumbnail.com/1199541398.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541398.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Gem - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541396/90c496853d?autoplay=1" data-thumb="https://vumbnail.com/1199541396.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541396.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Letta - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541397/e47dd5efeb?autoplay=1" data-thumb="https://vumbnail.com/1199541397.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541397.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Garnix - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541422/dac62b841f?autoplay=1" data-thumb="https://vumbnail.com/1199541422.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541422.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Pathway - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541423/3be1ffa924?autoplay=1" data-thumb="https://vumbnail.com/1199541423.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541423.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Tassel - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541432/903fed159c?autoplay=1" data-thumb="https://vumbnail.com/1199541432.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541432.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Tonik - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
+      <div class="card" data-cat="logo" data-embed="https://player.vimeo.com/video/1199541433/885e648780?autoplay=1" data-thumb="https://vumbnail.com/1199541433.jpg">
+        <div class="thumb">
+          <img src="https://vumbnail.com/1199541433.jpg" alt="" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div></div>
+          <div class="thumb-meta"><span class="thumb-title">Vela - Logo Animation</span><span class="thumb-tag">Logo</span></div>
+        </div>
+      </div>
+
     </div>
   </div>
+</section>
 
-  <div class="card" data-cat="product"
-    data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-    data-thumb="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg">
-    <div class="thumb">
-      <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Product Demo">
-      <div class="play-overlay">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p class="card-title">Elastics — Product Demo</p>
-      <span class="card-tag">Product</span>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-heading">About</p>
+    <p class="about-text">
+      I work at the intersection of branding and digital products — creating motion that helps people understand what something is, and feel why it matters. My background in UI/UX design means I understand how products are built and how teams ship them, which shapes the way I think about animation: not as decoration, but as a functional layer of the experience.<br><br>
+      I'm most interested in translating static identity systems into motion — finding the logic already embedded in a brand and turning it into something that moves with purpose. The kind of animation that feels like it <em>belongs</em> to the product, rather than being applied to it.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-heading">Contact</p>
+    <div class="contact-links">
+      <a href="mailto:mjalbrzykowski@gmail.com">mjalbrzykowski@gmail.com</a>
+      <a href="https://dribbble.com/mjalbrzykowski" target="_blank" rel="noopener">dribbble.com/mjalbrzykowski</a>
     </div>
   </div>
-
-  <div class="card" data-cat="explainer"
-    data-embed="https://player.vimeo.com/video/148751763?autoplay=1"
-    data-thumb="https://vumbnail.com/148751763.jpg">
-    <div class="thumb">
-      <img src="https://vumbnail.com/148751763.jpg" alt="Explainer">
-      <div class="play-overlay">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p class="card-title">How it works</p>
-      <span class="card-tag">Explainer</span>
-    </div>
-  </div>
-
-</div>
+</section>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-inner" id="lightbox-inner">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Zamknij">&times;</button>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
   </div>
 </div>
 
 <script>
-  // Filtry
+  // Filters
   document.getElementById('filters').addEventListener('click', function(e) {
     const btn = e.target.closest('.filter-btn');
     if (!btn) return;
@@ -287,13 +623,14 @@
     });
   });
 
-  // Lightbox - otwieranie
+  // Lightbox open
   document.getElementById('grid').addEventListener('click', function(e) {
     const card = e.target.closest('.card');
     if (!card || !card.dataset.embed) return;
     const inner = document.getElementById('lightbox-inner');
-    const old = inner.querySelector('iframe');
-    if (old) old.remove();
+    const closeBtn = document.getElementById('lightbox-close');
+    inner.innerHTML = '';
+    inner.appendChild(closeBtn);
     const iframe = document.createElement('iframe');
     iframe.src = card.dataset.embed;
     iframe.allow = 'autoplay; fullscreen';
@@ -302,13 +639,14 @@
     document.body.style.overflow = 'hidden';
   });
 
-  // Lightbox - zamykanie
+  // Lightbox close
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
     document.body.style.overflow = '';
     const inner = document.getElementById('lightbox-inner');
-    const iframe = inner.querySelector('iframe');
-    if (iframe) iframe.remove();
+    const closeBtn = document.getElementById('lightbox-close');
+    inner.innerHTML = '';
+    inner.appendChild(closeBtn);
   }
   document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
   document.getElementById('lightbox').addEventListener('click', function(e) {
